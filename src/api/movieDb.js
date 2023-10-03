@@ -8,18 +8,9 @@ const apiBaseUrl = 'https://api.themoviedb.org/3';
 const movieEndpoint = (value) =>
   `${apiBaseUrl}/movie/${value}?api_key=${api_key}`;
 
-export const fetchMovies = async (value) => {
-  return await apiCall(movieEndpoint(value));
-};
-
 // tv show endpoints
-
 const tvShowEndpoint = (value) =>
   `${apiBaseUrl}/tv/${value}?api_key=${api_key}`;
-
-export const fetchTvShows = async (value) => {
-  return await apiCall(tvShowEndpoint(value));
-};
 
 //search endpoint
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${api_key}`;
@@ -47,6 +38,14 @@ const apiCall = async (endpoint, params) => {
     console.log('error: ', error);
     return {};
   }
+};
+
+export const fetchMovies = async (value) => {
+  return await apiCall(movieEndpoint(value));
+};
+
+export const fetchTvShows = async (value) => {
+  return await apiCall(tvShowEndpoint(value));
 };
 
 export const fetchMovieDetails = async (movieId) => {

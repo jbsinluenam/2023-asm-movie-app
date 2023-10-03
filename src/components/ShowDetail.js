@@ -14,9 +14,7 @@ export default function ShowDetail({
   popularity,
   releaseDate,
   posterPath,
-  movie,
   onPress,
-  title,
 }) {
   return (
     <View className='mb-2 pb-2 border-b border-b-neutral-200'>

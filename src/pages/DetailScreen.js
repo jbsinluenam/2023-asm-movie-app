@@ -12,6 +12,7 @@ import { useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetchMovieDetails, fetchTvShowDetails } from '../api/movieDb';
 import { image342, fallbackMoviePoster } from '../api/movieDb';
+import { CurrencyBangladeshiIcon } from 'react-native-heroicons/outline';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,14 +22,22 @@ export default function DetailScreen(props) {
   const [details, setDetails] = useState({});
 
   useEffect(() => {
+    // console.log('Received showId:', item.showId);
     if (item.movieId) getMovieDetails(item.movieId);
     if (item.tvShowId) getTvShowDetails(item.tvShowId);
+
+    getMovieDetails(item.showId) || getTvShowDetails(item.showId);
   }, []);
 
   useEffect(() => {
     props.navigation.setOptions({
       /// Set the header title to the movie title
-      title: details.title || details.name,
+      title:
+        details.title?.length > 18
+          ? `${details.title.substring(0, 18)}...`
+          : details.name?.length > 18
+          ? `${details.name.substring(0, 18)}...`
+          : details.title || details.name,
     });
   }, [details]);
 
@@ -43,7 +52,7 @@ export default function DetailScreen(props) {
 
   const getTvShowDetails = async (tvShowId) => {
     const data = await fetchTvShowDetails(tvShowId);
-    // console.log('API Response:', data);
+    // console.log('TV Show Title:' + data.name);
 
     if (data) {
       setDetails(data);
@@ -53,7 +62,11 @@ export default function DetailScreen(props) {
   return (
     <SafeAreaView className='flex flex-1 items-center space-y-4 px-8 text-neutral-800'>
       <Text className='text-2xl font-bold'>
-        {details.title || details.name}
+        {details.title?.length > 25
+          ? `${details.title.substring(0, 25)}...`
+          : details.name?.length > 25
+          ? `${details.name.substring(0, 25)}...`
+          : details.title || details.name}
       </Text>
       <Image
         source={{
