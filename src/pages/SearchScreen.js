@@ -9,6 +9,7 @@ export default function Search() {
   const data = [
     { label: 'Multi', value: '1' },
     { label: 'Movie', value: 'movie' },
+    { label: 'TV Show', value: 'tv' },
   ];
 
   return (

@@ -3,13 +3,10 @@ import {
   Text,
   ScrollView,
   TouchableWithoutFeedback,
-  TouchableOpacity,
-  Dimensions,
   Image,
   Pressable,
 } from 'react-native';
 import React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { image185, fallbackMoviePoster } from '../api/movieDb';
 
 export default function ShowDetail({
@@ -18,9 +15,9 @@ export default function ShowDetail({
   releaseDate,
   posterPath,
   movie,
+  onPress,
+  title,
 }) {
-  const navigation = useNavigation();
-
   return (
     <View className='mb-2 pb-2 border-b border-b-neutral-200'>
       <ScrollView
@@ -44,12 +41,7 @@ export default function ShowDetail({
               <Text className='text-xs ml-1'>Popularity: {popularity}</Text>
               <Text className='text-xs ml-1'>Release Date: {releaseDate}</Text>
               <Pressable
-                onPress={() =>
-                  navigation.push('Detail', {
-                    title: movieName,
-                    movie,
-                  })
-                }
+                onPress={onPress} // Use the onPress prop
                 className='px-2 flex justify-center rounded-md items-center bg-[#18accc]'>
                 <Text className='p-2 text-center text-white'>More Details</Text>
               </Pressable>

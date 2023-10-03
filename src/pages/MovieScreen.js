@@ -4,10 +4,12 @@ import DropdownComponent from '../components/DropDown';
 import ShowDetail from '../components/ShowDetail';
 import { fetchMovies } from '../api/movieDb';
 import debounce from 'lodash.debounce';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Movie() {
   const [movies, setMovies] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('popular');
+  const navigation = useNavigation(); // Initialize useNavigation
 
   const data = [
     { label: 'Popular', value: 'popular' },
@@ -17,8 +19,6 @@ export default function Movie() {
   ];
 
   const getMoviesByCategory = async (category) => {
-    // console.log('category: ', category);
-
     const data = await fetchMovies(category);
     // console.log('API Response:', data);
     // console.log(data.results[0].id);
@@ -35,6 +35,14 @@ export default function Movie() {
     debouncedGetMovies(selectedCategory);
   }, [selectedCategory]);
 
+  // Define a function to handle navigation to movie detail screen
+  const navigateToMovieDetail = (movieId) => {
+    // Navigate to the 'Detail' screen and pass the movie ID
+    navigation.navigate('Detail', {
+      movieId: movieId,
+    });
+  };
+
   return (
     <View className='flex flex-1 space-y-6 justify-center items-center bg-white'>
       <View className='flex flex-row justify-between w-10/12 mt-4'>
@@ -49,12 +57,13 @@ export default function Movie() {
         showsVerticalScrollIndicator={false}>
         {movies.map((movie, index) => (
           <ShowDetail
-            data={data}
             key={index}
             posterPath={movie.poster_path}
             movieName={movie.title}
             popularity={movie.popularity}
             releaseDate={movie.release_date}
+            onPress={() => navigateToMovieDetail(movie.id)} // Pass the onPress function
+            title={movie.title}
           />
         ))}
       </ScrollView>

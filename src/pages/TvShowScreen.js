@@ -4,23 +4,26 @@ import DropdownComponent from '../components/DropDown';
 import { fetchTvShows } from '../api/movieDb';
 import debounce from 'lodash.debounce';
 import ShowDetail from '../components/ShowDetail';
+import { useNavigation } from '@react-navigation/native';
 
 export default function TvShow() {
   const [tvShows, setTvShows] = React.useState([]);
   const [selectedCategory, setSelectedCategory] = React.useState('popular');
+  const navigation = useNavigation(); // Initialize useNavigation
 
   const data = [
     { label: 'Airing Today', value: 'airing_today' },
     { label: 'On The Air', value: 'on_the_air' },
     { label: 'Popular', value: 'popular' },
+    { label: 'Top Rated', value: 'top_rated' },
   ];
 
   const getTvShowsByCategory = async (category) => {
-    console.log('category: ', category);
+    // console.log('category: ', category);
 
     const data = await fetchTvShows(category);
-    console.log('API Response:', data);
-    console.log(data.results[0].poster_path);
+    // console.log('API Response:', data);
+    // console.log(data.results[0].poster_path);
     if (data && data.results) {
       setTvShows(data.results);
     }
@@ -34,6 +37,14 @@ export default function TvShow() {
     debouncedGetTvShows(selectedCategory);
   }, [selectedCategory]);
 
+  // Define a function to handle navigation to movie detail screen
+  const navigateToMovieDetail = (tvShowId) => {
+    // Navigate to the 'Detail' screen and pass the movie ID
+    navigation.navigate('Detail', {
+      tvShowId: tvShowId,
+    });
+  };
+
   return (
     <View className='flex flex-1 space-y-6 justify-center items-center bg-white'>
       <View className='flex flex-row justify-between w-10/12 mt-4'>
@@ -46,13 +57,14 @@ export default function TvShow() {
       <ScrollView
         className='flex flex-1 w-10/12 '
         showsVerticalScrollIndicator={false}>
-        {tvShows.map((tvShow) => (
+        {tvShows.map((tvShow, index) => (
           <ShowDetail
-            key={tvShow.id}
+            key={index}
             posterPath={tvShow.poster_path}
             movieName={tvShow.name}
             popularity={tvShow.popularity}
             releaseDate={tvShow.first_air_date}
+            onPress={() => navigateToMovieDetail(tvShow.id)} // Pass the onPress function
           />
         ))}
       </ScrollView>

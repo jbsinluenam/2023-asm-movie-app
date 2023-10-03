@@ -24,6 +24,7 @@ export const fetchTvShows = async (value) => {
 //search endpoint
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${api_key}`;
 const searchMultiEndpoint = `${apiBaseUrl}/search/multi?api_key=${api_key}`;
+const searchTvShowsEndpoint = `${apiBaseUrl}/search/tv?api_key=${api_key}`;
 
 //dynamic endpoints
 const movieDetailsEndpoint = (movieId) =>
@@ -62,6 +63,10 @@ export const searchMovies = (params) => {
 
 export const searchMulti = (params) => {
   return apiCall(searchMultiEndpoint, params);
+};
+
+export const searchTvShows = (params) => {
+  return apiCall(searchTvShowsEndpoint, params);
 };
 
 //image endpoints

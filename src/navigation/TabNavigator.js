@@ -70,12 +70,11 @@ export default function Tabs() {
         <Stack.Screen
           name='Detail'
           component={DetailScreen}
-          options={{
+          options={({ route }) => ({
             headerStyle: { backgroundColor: '#273646' },
             headerTintColor: 'white',
-            title: 'Detail',
             headerTitleAlign: 'center',
-          }}
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
