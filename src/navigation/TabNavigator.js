@@ -4,6 +4,7 @@ import React from 'react';
 import MovieScreen from '../pages/MovieScreen';
 import SearchScreen from '../pages/SearchScreen';
 import TvShowScreen from '../pages/TvShowScreen';
+import DetailScreen from '../pages/DetailScreen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -66,6 +67,16 @@ export default function Tabs() {
             </Tab.Navigator>
           )}
         </Stack.Screen>
+        <Stack.Screen
+          name='Detail'
+          component={DetailScreen}
+          options={{
+            headerStyle: { backgroundColor: '#273646' },
+            headerTintColor: 'white',
+            title: 'Detail',
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
