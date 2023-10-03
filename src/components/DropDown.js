@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
-const DropdownComponent = ({ data, selectedCategory, setSelectedCategory }) => {
+const DropdownComponent = ({
+  data,
+  selectedCategory,
+  setSelectedCategory,
+  style,
+}) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
   return (
     <Dropdown
-      style={[isFocus && { borderColor: '#273646' }]}
       className='border border-gray-300 rounded-md px-2 self-center w-full'
       placeholderStyle={styles.placeholderStyle}
       selectedTextStyle={styles.selectedTextStyle}
@@ -28,6 +32,10 @@ const DropdownComponent = ({ data, selectedCategory, setSelectedCategory }) => {
         setSelectedCategory(item.value); // Update selectedCategory in the parent component
         setIsFocus(false);
       }}
+      style={[
+        style, // Add the provided style
+        isFocus && { borderColor: '#273646' }, //
+      ]}
     />
   );
 };

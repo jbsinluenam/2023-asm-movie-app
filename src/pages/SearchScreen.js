@@ -18,13 +18,15 @@ export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [isTextEmpty, setIsTextEmpty] = useState(false);
   // State to store the search query
 
   const navigation = useNavigation(); // Initialize useNavigation
 
   const handleSearch = async (text) => {
     try {
-      if (text.length > 0) {
+      if (text.length > 0 && text !== '') {
+        setIsTextEmpty(false);
         setSearchQuery(text);
         let data = [];
 
@@ -39,6 +41,9 @@ export default function Search() {
         if (data && data.results) {
           setSearchResults(data.results);
         }
+      } else if (text.length === 0) {
+        setIsTextEmpty(true);
+        console.log('text is empty');
       } else {
         // Clear search results when the query is empty
         setSearchResults([]);
@@ -74,6 +79,10 @@ export default function Search() {
           value={searchText}
           onChangeText={(text) => setSearchQuery(text)}
           placeholder='i.e. James Bond, the Matrix'
+          style={{
+            borderWidth: 1,
+            borderColor: isTextEmpty ? '#de2626' : '#e5e7eb',
+          }}
         />
       </View>
       <View className=' flex flex-column justify-between w-10/12 space-y-2 self-center'>
@@ -86,6 +95,10 @@ export default function Search() {
               data={data}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
+              style={{
+                borderWidth: 1,
+                borderColor: isTextEmpty ? '#de2626' : '#e5e7eb',
+              }}
             />
           </View>
           <Pressable
@@ -95,9 +108,15 @@ export default function Search() {
             <Text className='p-2 text-center text-white'>Search</Text>
           </Pressable>
         </View>
-        <Text className='text-xs font-normal text-left text-black'>
-          Please select search type
-        </Text>
+        {isTextEmpty ? (
+          <Text className='text-xs font-normal text-left text-red-500'>
+            Movie/TV Show Name is required
+          </Text>
+        ) : (
+          <Text className='text-xs font-normal text-left text-black'>
+            Please select search type
+          </Text>
+        )}
       </View>
       <ScrollView
         className='flex flex-1 w-10/12 self-center'
@@ -117,9 +136,11 @@ export default function Search() {
             />
           ))
         ) : (
-          <Text className='flex-1 text-xl font-bold text-black'>
-            Please initiate a search
-          </Text>
+          <View className='flex flex-1 justify-center text-neutral-800 items-center'>
+            <Text className='flex-1 text-xl pt-8 font-bold'>
+              Please initiate a search
+            </Text>
+          </View>
         )}
       </ScrollView>
     </View>

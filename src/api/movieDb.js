@@ -24,6 +24,9 @@ const movieDetailsEndpoint = (movieId) =>
 const tvShowDetailsEndpoint = (tvShowId) =>
   `${apiBaseUrl}/tv/${tvShowId}?api_key=${api_key}`;
 
+const personDetailsEndpoint = (personId) =>
+  `${apiBaseUrl}/person/${personId}?api_key=${api_key}`;
+
 const apiCall = async (endpoint, params) => {
   const options = {
     method: 'GET',
@@ -54,6 +57,10 @@ export const fetchMovieDetails = async (movieId) => {
 
 export const fetchTvShowDetails = async (tvShowId) => {
   return await apiCall(tvShowDetailsEndpoint(tvShowId));
+};
+
+export const fetchPersonDetails = async (personId) => {
+  return await apiCall(personDetailsEndpoint(personId));
 };
 
 export const searchMovies = (params) => {
