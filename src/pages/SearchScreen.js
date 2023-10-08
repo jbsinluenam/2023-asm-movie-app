@@ -60,12 +60,16 @@ export default function Search() {
   };
 
   // Define a function to handle navigation to movie detail screen
-  const navigateToMovieDetail = (showId) => {
+  const navigateToMovieDetail = (showId, type) => {
     console.log('ShowId before navigation:', showId);
+    console.log('Type before navigation:', type);
+    {
+    }
 
     // Navigate to the 'Detail' screen and pass the show ID
     navigation.navigate('Detail', {
       showId: showId,
+      type: type,
     });
   };
 
@@ -131,8 +135,11 @@ export default function Search() {
               popularity={result.popularity}
               releaseDate={result.release_date || result.first_air_date}
               overview={result.overview}
-              onPress={() => navigateToMovieDetail(result.id)} // Pass the onPress function
+              onPress={() =>
+                navigateToMovieDetail(result.id, result.media_type)
+              } // Pass the onPress function
               title={result.title || result.name}
+              type={result.media_type}
             />
           ))
         ) : (

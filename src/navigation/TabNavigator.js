@@ -71,8 +71,8 @@ export default function Tabs() {
           name='Detail'
           component={DetailScreen}
           options={({ route }) => ({
-            headerStyle: { backgroundColor: '#273646' },
-            headerTintColor: 'white',
+            headerStyle: { backgroundColor: 'white' },
+            headerTintColor: '#273646',
             headerTitleAlign: 'center',
           })}
         />
